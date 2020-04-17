@@ -21,10 +21,19 @@ export const creditSlice = createSlice({
       // eslint-disable-next-line no-param-reassign
       state.hasError = action.payload;
     },
+    resetFetchedData: (state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.fetchedData = undefined;
+    },
   },
 });
 
-export const { setFetchedData, setIsFetching, setHasError } = creditSlice.actions;
+export const {
+  setFetchedData,
+  setIsFetching,
+  setHasError,
+  resetFetchedData,
+} = creditSlice.actions;
 
 export const fetchData = (personId) => async (dispatch) => {
   dispatch(setIsFetching(true));

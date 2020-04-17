@@ -1,15 +1,20 @@
 import React from 'react';
-import Credit from './components/credit/Credit';
-
-import './App.css';
+import { Container } from '@material-ui/core';
+import Credit from './components/Credit/Credit';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <Credit />
-      </header>
-    </div>
+    <Container
+      maxWidth="sm"
+      style={{
+        height: '100vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+      <Credit />
+    </Container>
   );
 }
 

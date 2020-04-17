@@ -1,42 +1,58 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { Button, TextField } from '@material-ui/core';
 
-const Form = ({ onPersonIdSubmit }) => {
-  const personIdRef = useRef(null);
+const Form = ({ onPersonIdSubmit, isFetching }) => {
   const [isValidPersonId, setIsValidPersonId] = useState(false);
+  const [personId, setPersonId] = useState('');
 
   const submitHandler = (event) => {
     event.preventDefault();
-
     if (isValidPersonId) {
-      onPersonIdSubmit(personIdRef.current.value);
+      onPersonIdSubmit(personId);
     }
   };
 
-  const validatePersonId = () => {
-    const personId = personIdRef.current.value;
-
-    if (/^[a-zA-Z]{1,10}$/.test(personId)) {
+  const validatePersonId = (value) => {
+    if (/^[a-zA-Z]{1,10}$/.test(value)) {
       setIsValidPersonId(true);
+      setPersonId(value);
     } else {
       setIsValidPersonId(false);
+      setPersonId('');
     }
   };
 
   return (
-    <form onSubmit={submitHandler}>
-      <div>Person identificator:</div>
-      <input ref={personIdRef} placeholder="Please enter value" onChange={validatePersonId} />
-      <button type="submit">
-        Submit -
-        {isValidPersonId ? 'valid' : 'not valid'}
-      </button>
+    <form onSubmit={submitHandler} autoComplete="off">
+      <TextField
+        onChange={(event) => validatePersonId(event.target.value)}
+        fullWidth
+        error={!isValidPersonId}
+        variant="outlined"
+        color="primary"
+        size="small"
+        type="text"
+        name="personId"
+        label="Person identifier"
+      />
+      <Button
+        size="large"
+        type="submit"
+        variant="contained"
+        color="primary"
+        disabled={!isValidPersonId || isFetching}
+        style={{ marginTop: 10, marginBottom: 10 }}
+      >
+        Submit
+      </Button>
     </form>
   );
 };
 
 Form.propTypes = {
   onPersonIdSubmit: PropTypes.func.isRequired,
+  isFetching: PropTypes.bool.isRequired,
 };
 
 export default Form;

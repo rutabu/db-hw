@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import creditReducer from '../components/credit/credit.slice';
+import creditReducer from '../components/Credit/credit.slice';
 
 export default configureStore({
   reducer: {

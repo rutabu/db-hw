@@ -1,51 +1,52 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Backdrop, CircularProgress } from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
 import Form from '../Form';
-import { fetchData } from './credit.slice';
+import { fetchData, resetFetchedData } from './credit.slice';
 import { selectHasError, selectIsFetching, selectFetchedData } from './credit.selectors';
-import { calculateValue } from './functions';
+import CreditDialog from './CreditDialog';
 
 const Credit = () => {
   const dispatch = useDispatch();
   const isFetching = useSelector(selectIsFetching);
   const hasError = useSelector(selectHasError);
   const fetchedData = useSelector(selectFetchedData);
+
   const onPersonIdSubmitHandler = (personId) => {
     dispatch(fetchData(personId));
   };
 
+  const onDialogCloseHandler = () => {
+    dispatch(resetFetchedData());
+  };
+
   return (
-    <div>
-      <Form onPersonIdSubmit={onPersonIdSubmitHandler} />
-      {isFetching && '...fetching data'}
+    <>
+      <Form onPersonIdSubmit={onPersonIdSubmitHandler} isFetching={isFetching} />
+      {isFetching && (
+        <Backdrop open>
+          <CircularProgress color="primary" />
+        </Backdrop>
+      )}
       {hasError && (
-      <div>
-        Sorry, error occurred while fetching the data.
-        <br />
-        Please try again.
-      </div>
+        <Alert
+          variant="filled"
+          severity="error"
+          style={{
+            position: 'absolute',
+            top: 20,
+          }}
+        >
+          Sorry, error occurred while fetching the data.
+          <br />
+          Please try again.
+        </Alert>
       )}
       {!hasError && fetchedData && (
-        <div>
-          Client:
-          {fetchedData.person.name}
-          {' '}
-          {fetchedData.person.lastName}
-          <br />
-          Affordability range:
-          {' '}
-          {fetchedData.affordability.min}
-          {' '}
-          -
-          {' '}
-          {fetchedData.affordability.max}
-          <br />
-          Calculated value:
-          {' '}
-          {calculateValue(fetchedData)}
-        </div>
+        <CreditDialog fetchedData={fetchedData} onCloseHandler={onDialogCloseHandler} />
       )}
-    </div>
+    </>
   );
 };
 
