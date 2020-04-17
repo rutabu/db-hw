@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -7,10 +7,15 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
-import PropTypes from 'prop-types';
 import { calculateValue } from './functions';
+import { CreditFetchedData } from '../../app/store'
 
-const CreditDialog = ({ fetchedData, onCloseHandler }) => {
+interface CreditDialogProps {
+  fetchedData: CreditFetchedData,
+  onCloseHandler: () => void
+}
+
+const CreditDialog: FC<CreditDialogProps> = ({ fetchedData, onCloseHandler }) => {
   const [open, setOpen] = useState(true);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
@@ -52,12 +57,6 @@ const CreditDialog = ({ fetchedData, onCloseHandler }) => {
       </Dialog>
     </div>
   );
-};
-
-CreditDialog.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  fetchedData: PropTypes.object.isRequired,
-  onCloseHandler: PropTypes.func.isRequired,
 };
 
 export default CreditDialog;

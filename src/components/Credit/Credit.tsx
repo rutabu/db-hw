@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Backdrop, CircularProgress } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
@@ -7,13 +7,13 @@ import { fetchData, resetFetchedData } from './credit.slice';
 import { selectHasError, selectIsFetching, selectFetchedData } from './credit.selectors';
 import CreditDialog from './CreditDialog';
 
-const Credit = () => {
+const Credit: FC = () => {
   const dispatch = useDispatch();
   const isFetching = useSelector(selectIsFetching);
   const hasError = useSelector(selectHasError);
   const fetchedData = useSelector(selectFetchedData);
 
-  const onPersonIdSubmitHandler = (personId) => {
+  const onPersonIdSubmitHandler = (personId: string) => {
     dispatch(fetchData(personId));
   };
 

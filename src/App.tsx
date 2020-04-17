@@ -1,8 +1,8 @@
-import React from 'react';
+import React,  { FC } from 'react';
 import { Container } from '@material-ui/core';
 import Credit from './components/Credit/Credit';
 
-function App() {
+const App: FC = () => {
   return (
     <Container
       maxWidth="sm"

@@ -1,8 +1,9 @@
 import axios from 'axios';
 import { get } from 'lodash';
+import { CreditFetchedData } from '../../app/store'
 
-export const fetchCreditData = async (personId) => {
-  let creditData;
+export const fetchCreditData = async (personId: string): Promise<CreditFetchedData> => {
+  let creditData: Partial<CreditFetchedData> = {};
 
   await axios.get(`/api/person/${personId}`)
     .then((response) => {
@@ -59,14 +60,11 @@ export const fetchCreditData = async (personId) => {
         },
       };
     })
-    .catch(() => {
-      creditData = undefined;
-    });
 
-  return creditData;
+    return creditData as CreditFetchedData;
 };
 
-export const calculateValue = (fetchedData) => {
+export const calculateValue = (fetchedData: CreditFetchedData): string => {
   const {
     affordability: { min },
     exposure: { values },
