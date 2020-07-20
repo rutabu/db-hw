@@ -17,7 +17,7 @@
     "@types/react-redux": "^7.1.7",
     "axios": "^0.19.2",
     "eslint-config-airbnb": "^18.1.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "miragejs": "^0.1.37",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
